@@ -44,7 +44,9 @@ public class RepositoryImpl implements Repository {
             }
         }).delay(2, TimeUnit.SECONDS));
 
-        //delay() operator is here to simulate network latency
+        //This is where things get tricky. We use concat operator to merge two observables into one. However, second observable won't start if first observable isn't completed.
+        //As soon as first observable completes, we ask for data from second observables and their value is saved to local database inside doOnNext operator
+        //delay() operator is here to simulate network latency (the main server is well optimized lol)
 
     }
 
@@ -61,6 +63,13 @@ public class RepositoryImpl implements Repository {
                         return Flowable.empty();
                     }
                 });
+
+        //Disclaimer:
+        //We use flatMapIterable to map from Flowable<List<DatePojo>> to Flowable<DatePojo>
+        //We are using timeout to fire onComplete after N seconds if for some reason we can't retrive data (in this case, database is empty). If database is empty, it will fire
+        //onError which breaks the eventStream, so we user onErrorResumeNext to return empty Flowable which leads to onComplete
+
+        //https://stackoverflow.com/questions/44945285/how-to-handel-no-results-with-android-room-and-rxjava-2
 
     }
 }

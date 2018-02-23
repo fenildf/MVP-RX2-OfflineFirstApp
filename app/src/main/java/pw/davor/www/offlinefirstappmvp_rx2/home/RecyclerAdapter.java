@@ -54,6 +54,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.HomeVi
         if (!getList().contains(datePojo)) {
             getList().add(datePojo);
         }
+        // We are checking if new items are already in list. If no, new item is added to list.
     }
 
     class HomeViewHolder extends RecyclerView.ViewHolder {

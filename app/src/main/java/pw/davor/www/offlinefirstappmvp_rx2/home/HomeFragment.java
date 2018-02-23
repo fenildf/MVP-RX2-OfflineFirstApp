@@ -38,6 +38,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
 
         mAdapter = new RecyclerAdapter(getContext());
 
+
+
         if (getActivity() != null && getActivity().getApplication() != null) {
             repository = ((OfflineFirstApp) (getActivity().getApplication())).getRepository();
             mPresenter = new HomePresenter(this, repository);
@@ -45,6 +47,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         } else {
             showErrorSnack("App is null :\\");
         }
+        // Just some precauison.. this mess can be sorted out with DI.
+
     }
 
     @Override

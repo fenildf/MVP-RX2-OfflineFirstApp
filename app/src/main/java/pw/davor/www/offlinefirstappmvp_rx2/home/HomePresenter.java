@@ -66,9 +66,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
                     @Override
                     public void onComplete() {
-                        //nothing to see here
                         mView.showToast("Fresh data loaded");
-
                     }
                 })
         );

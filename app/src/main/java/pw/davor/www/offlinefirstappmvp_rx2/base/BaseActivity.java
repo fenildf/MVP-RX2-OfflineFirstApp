@@ -15,4 +15,6 @@ public class BaseActivity extends AppCompatActivity {
                 .replace(resId, fragment, tag)
                 .commit();
     }
+
+    // Google Blueprints
 }

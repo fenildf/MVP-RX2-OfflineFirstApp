@@ -21,6 +21,7 @@ public class OfflineFirstApp extends Application {
     public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
+        //Stetho -> So we can View our database via Google Chrome
     }
 
     public Repository getRepository() {

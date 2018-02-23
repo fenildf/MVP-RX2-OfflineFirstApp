@@ -19,7 +19,11 @@ public class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setRetainInstance(true);
+
+        // We want to retain instance of fragments to keep view constant when screen is orientated.
     }
+
+    // Those below are just some basic snacks.. not neceserally useful for this project.
 
     protected void showInfoSnack(String message) {
         if (getContext() != null && getView() != null) {
