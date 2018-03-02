@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import pw.davor.www.offlinefirstappmvp_rx2.R;
-import pw.davor.www.offlinefirstappmvp_rx2.data.dataModels.DatePojo;
+import pw.davor.www.offlinefirstappmvp_rx2.data.models.dataModels.DatePojoDataModel;
 
 /**
  * Created by bnc on 16.2.2018..
@@ -19,13 +19,13 @@ import pw.davor.www.offlinefirstappmvp_rx2.data.dataModels.DatePojo;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.HomeViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private ArrayList<DatePojo> mList = new ArrayList<>();
+    private ArrayList<DatePojoDataModel> mList = new ArrayList<>();
 
     public RecyclerAdapter(Context context) {
         this.layoutInflater = LayoutInflater.from(context);
     }
 
-    public ArrayList<DatePojo> getList() {
+    public ArrayList<DatePojoDataModel> getList() {
         return mList;
     }
 
@@ -36,9 +36,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.HomeVi
     }
 
     @Override
-    public void onBindViewHolder(HomeViewHolder holder, int position) {
-        holder.mTime.setText(mList.get(position).getTime());
-        holder.mDate.setText(mList.get(position).getDate());
+    public void onBindViewHolder(final HomeViewHolder holder, int position) {
+        holder.mTime.setText(mList.get(position).getDatePojo().getTime());
+        holder.mDate.setText(mList.get(position).getDatePojo().getDate());
+
+        if (mList.get(position).isFresh()) {
+            holder.mNew.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -50,7 +54,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.HomeVi
         }
     }
 
-    public void update(DatePojo datePojo) {
+    public void update(DatePojoDataModel datePojo) {
         if (!getList().contains(datePojo)) {
             getList().add(datePojo);
         }
@@ -58,12 +62,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.HomeVi
     }
 
     class HomeViewHolder extends RecyclerView.ViewHolder {
-        private TextView mDate, mTime;
+        private TextView mDate, mTime, mNew;
 
         HomeViewHolder(View itemView) {
             super(itemView);
             mDate = itemView.findViewById(R.id.home_recycler_date);
             mTime = itemView.findViewById(R.id.home_recycler_time);
+            mNew = itemView.findViewById(R.id.home_recycler_fresh);
         }
     }
 }

@@ -15,7 +15,7 @@ import pw.davor.www.offlinefirstappmvp_rx2.R;
 import pw.davor.www.offlinefirstappmvp_rx2.application.OfflineFirstApp;
 import pw.davor.www.offlinefirstappmvp_rx2.base.BaseFragment;
 import pw.davor.www.offlinefirstappmvp_rx2.data.Repository;
-import pw.davor.www.offlinefirstappmvp_rx2.data.dataModels.DatePojo;
+import pw.davor.www.offlinefirstappmvp_rx2.data.models.dataModels.DatePojoDataModel;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
 
@@ -111,7 +111,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     }
 
     @Override
-    public void updateRecycler(DatePojo datePojo) {
+    public void updateRecycler(DatePojoDataModel datePojo) {
         mAdapter.update(datePojo);
         mAdapter.notifyItemInserted(mAdapter.getItemCount());
         mRecycler.smoothScrollToPosition(mAdapter.getItemCount()-1);

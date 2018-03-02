@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.subscribers.DisposableSubscriber;
 import pw.davor.www.offlinefirstappmvp_rx2.data.Repository;
-import pw.davor.www.offlinefirstappmvp_rx2.data.dataModels.DatePojo;
+import pw.davor.www.offlinefirstappmvp_rx2.data.models.dataModels.DatePojoDataModel;
 
 /**
  * Created by bnc on 16.2.2018..
@@ -50,10 +50,10 @@ public class HomePresenter implements HomeContract.Presenter {
 
                     }
                 })
-                .subscribeWith(new DisposableSubscriber<DatePojo>() {
+                .subscribeWith(new DisposableSubscriber<DatePojoDataModel>() {
                     @Override
-                    public void onNext(DatePojo datePojo) {
-                        mView.updateRecycler(datePojo);
+                    public void onNext(DatePojoDataModel datePojoDataModel) {
+                        mView.updateRecycler(datePojoDataModel);
 
                     }
 

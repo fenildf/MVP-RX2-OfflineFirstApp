@@ -1,5 +1,5 @@
 
-package pw.davor.www.offlinefirstappmvp_rx2.data.dataModels;
+package pw.davor.www.offlinefirstappmvp_rx2.data.models;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

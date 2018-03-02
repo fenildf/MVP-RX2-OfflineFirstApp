@@ -5,7 +5,8 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import pw.davor.www.offlinefirstappmvp_rx2.data.dataModels.DatePojo;
+import pw.davor.www.offlinefirstappmvp_rx2.data.local.dao.DatePojoDao;
+import pw.davor.www.offlinefirstappmvp_rx2.data.models.DatePojo;
 
 /**
  * Created by bnc on 16.2.2018..

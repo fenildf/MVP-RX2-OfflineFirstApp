@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OfflineFirstAppMVPRX2.iml" filepath="$PROJECT_DIR$/OfflineFirstAppMVPRX2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MVP-RX2-OfflineFirstApp.iml" filepath="$PROJECT_DIR$/MVP-RX2-OfflineFirstApp.iml" />
+      <module fileurl="file://C:\Users\studio\AndroidStudioProjects\MVP-RX2-OfflineFirstApp\OfflineFirstAppMVPRX2.iml" filepath="C:\Users\studio\AndroidStudioProjects\MVP-RX2-OfflineFirstApp\OfflineFirstAppMVPRX2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\studio\AndroidStudioProjects\MVP-RX2-OfflineFirstApp\app\app.iml" filepath="C:\Users\studio\AndroidStudioProjects\MVP-RX2-OfflineFirstApp\app\app.iml" />
     </modules>
   </component>
 </project>

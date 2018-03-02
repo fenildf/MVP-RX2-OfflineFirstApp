@@ -9,8 +9,9 @@ import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import pw.davor.www.offlinefirstappmvp_rx2.data.dataModels.DatePojo;
+import pw.davor.www.offlinefirstappmvp_rx2.data.models.DatePojo;
 import pw.davor.www.offlinefirstappmvp_rx2.data.local.AppDatabase;
+import pw.davor.www.offlinefirstappmvp_rx2.data.models.dataModels.DatePojoDataModel;
 import pw.davor.www.offlinefirstappmvp_rx2.data.remote.ApiService;
 
 /**
@@ -30,17 +31,29 @@ public class RepositoryImpl implements Repository {
 
     public static Repository getInstance(AppDatabase local, ApiService remote) {
 
-        repository = new RepositoryImpl(local, remote);
+        if (repository == null) {
+            synchronized (RepositoryImpl.class) {
+                if (repository == null) {
+                    repository = new RepositoryImpl(local, remote);
+                }
+            }
+        }
+
         return repository;
     }
 
     @Override
-    public Flowable<DatePojo> getPojo() {
+    public Flowable<DatePojoDataModel> getPojo() {
 
-        return Flowable.concat(getPojoWithTimeout(1), mRemote.getDate().subscribeOn(Schedulers.io()).doOnNext(new Consumer<DatePojo>() {
+        return Flowable.concat(getPojoWithTimeout(1), mRemote.getDate().subscribeOn(Schedulers.io()).map(new Function<DatePojo, DatePojoDataModel>() {
             @Override
-            public void accept(DatePojo datePojo) throws Exception {
-                mLocal.datePojoDao().insert(datePojo);
+            public DatePojoDataModel apply(DatePojo datePojo) throws Exception {
+                return new DatePojoDataModel(true, datePojo);
+            }
+        }).doOnNext(new Consumer<DatePojoDataModel>() {
+            @Override
+            public void accept(DatePojoDataModel datePojoDataModel) throws Exception {
+                mLocal.datePojoDao().insert(datePojoDataModel.getDatePojo());
             }
         }).delay(2, TimeUnit.SECONDS));
 
@@ -50,16 +63,21 @@ public class RepositoryImpl implements Repository {
 
     }
 
-    private Flowable<DatePojo> getPojoWithTimeout(int seconds) {
-        return mLocal.datePojoDao().getAllPojos().subscribeOn(Schedulers.computation()).flatMapIterable(new Function<List<DatePojo>, Iterable<DatePojo>>() {
+    private Flowable<DatePojoDataModel> getPojoWithTimeout(int seconds) {
+        return mLocal.datePojoDao().getAllPojos().subscribeOn(Schedulers.io()).flatMapIterable(new Function<List<DatePojo>, Iterable<DatePojo>>() {
             @Override
             public Iterable<DatePojo> apply(List<DatePojo> datePojos) throws Exception {
                 return datePojos;
             }
         }).timeout(seconds, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io()).onErrorResumeNext(new Function<Throwable, Publisher<? extends DatePojo>>() {
+                .map(new Function<DatePojo, DatePojoDataModel>() {
                     @Override
-                    public Publisher<? extends DatePojo> apply(Throwable throwable) throws Exception {
+                    public DatePojoDataModel apply(DatePojo datePojo) throws Exception {
+                        return new DatePojoDataModel(false, datePojo);
+                    }
+                }).onErrorResumeNext(new Function<Throwable, Publisher<? extends DatePojoDataModel>>() {
+                    @Override
+                    public Publisher<? extends DatePojoDataModel> apply(Throwable throwable) throws Exception {
                         return Flowable.empty();
                     }
                 });

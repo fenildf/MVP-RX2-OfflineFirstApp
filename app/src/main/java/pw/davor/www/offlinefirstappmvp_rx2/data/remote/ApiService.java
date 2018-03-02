@@ -1,7 +1,7 @@
 package pw.davor.www.offlinefirstappmvp_rx2.data.remote;
 
 import io.reactivex.Flowable;
-import pw.davor.www.offlinefirstappmvp_rx2.data.dataModels.DatePojo;
+import pw.davor.www.offlinefirstappmvp_rx2.data.models.DatePojo;
 import retrofit2.http.GET;
 
 /**

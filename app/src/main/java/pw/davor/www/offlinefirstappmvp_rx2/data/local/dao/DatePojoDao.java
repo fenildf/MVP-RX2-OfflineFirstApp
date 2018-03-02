@@ -1,4 +1,4 @@
-package pw.davor.www.offlinefirstappmvp_rx2.data.local;
+package pw.davor.www.offlinefirstappmvp_rx2.data.local.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import io.reactivex.Flowable;
-import pw.davor.www.offlinefirstappmvp_rx2.data.dataModels.DatePojo;
+import pw.davor.www.offlinefirstappmvp_rx2.data.models.DatePojo;
 
 /**
  * Created by bnc on 16.2.2018..
