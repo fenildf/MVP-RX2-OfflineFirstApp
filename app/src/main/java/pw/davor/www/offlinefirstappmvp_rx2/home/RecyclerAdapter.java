@@ -43,6 +43,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.HomeVi
         if (mList.get(position).isFresh()) {
             holder.mNew.setVisibility(View.VISIBLE);
         }
+        else{
+            // due to recycling mechanism we need to reset visibility
+            holder.mNew.setVisibility(View.GONE);
+        }
     }
 
     @Override
