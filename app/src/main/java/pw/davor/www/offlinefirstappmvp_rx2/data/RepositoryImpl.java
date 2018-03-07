@@ -5,6 +5,8 @@ import org.reactivestreams.Publisher;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import io.reactivex.Flowable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -20,26 +22,13 @@ import pw.davor.www.offlinefirstappmvp_rx2.data.remote.ApiService;
 
 public class RepositoryImpl implements Repository {
 
-    private static Repository repository;
-    private final AppDatabase mLocal;
-    private final ApiService mRemote;
+    private AppDatabase mLocal;
+    private ApiService mRemote;
 
+    @Inject
     public RepositoryImpl(AppDatabase mLocal, ApiService mRemote) {
         this.mLocal = mLocal;
         this.mRemote = mRemote;
-    }
-
-    public static Repository getInstance(AppDatabase local, ApiService remote) {
-
-        if (repository == null) {
-            synchronized (RepositoryImpl.class) {
-                if (repository == null) {
-                    repository = new RepositoryImpl(local, remote);
-                }
-            }
-        }
-
-        return repository;
     }
 
     @Override

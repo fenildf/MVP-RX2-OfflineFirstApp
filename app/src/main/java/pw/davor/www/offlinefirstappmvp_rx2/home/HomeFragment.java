@@ -11,18 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import pw.davor.www.offlinefirstappmvp_rx2.R;
 import pw.davor.www.offlinefirstappmvp_rx2.application.OfflineFirstApp;
 import pw.davor.www.offlinefirstappmvp_rx2.base.BaseFragment;
-import pw.davor.www.offlinefirstappmvp_rx2.data.Repository;
 import pw.davor.www.offlinefirstappmvp_rx2.data.models.dataModels.DatePojoDataModel;
+import pw.davor.www.offlinefirstappmvp_rx2.di.components.DaggerHomeFragmentComponent;
+import pw.davor.www.offlinefirstappmvp_rx2.di.components.HomeFragmentComponent;
+import pw.davor.www.offlinefirstappmvp_rx2.di.modules.HomeFragmentModule;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     private RecyclerView mRecycler;
-    private RecyclerAdapter mAdapter;
-    private HomeContract.Presenter mPresenter;
-    private Repository repository;
+    @Inject
+    RecyclerAdapter mAdapter;
+
+    @Inject
+    HomeContract.Presenter mPresenter;
+
+    private HomeFragmentComponent homeFragmentComponent;
 
     public HomeFragment() {
 
@@ -35,20 +43,18 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getHomeFragmentComponent().inject(this);
+    }
 
-        mAdapter = new RecyclerAdapter(getContext());
+    public HomeFragmentComponent getHomeFragmentComponent() {
+        if (homeFragmentComponent == null) {
+            homeFragmentComponent = DaggerHomeFragmentComponent.builder()
+                    .homeFragmentModule(new HomeFragmentModule(this))
+                    .applicationComponent(OfflineFirstApp.get(getContext()).getApplicationComponent())
 
-
-
-        if (getActivity() != null && getActivity().getApplication() != null) {
-            repository = ((OfflineFirstApp) (getActivity().getApplication())).getRepository();
-            mPresenter = new HomePresenter(this, repository);
-
-        } else {
-            showErrorSnack("App is null :\\");
+                    .build();
         }
-        // Just some precauison.. this mess can be sorted out with DI.
-
+        return homeFragmentComponent;
     }
 
     @Override
@@ -65,7 +71,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         if (mRecycler.getLayoutManager() == null) {
             LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
             layoutManager.setSmoothScrollbarEnabled(true);
-
             mRecycler.setLayoutManager(layoutManager);
         }
 
@@ -114,7 +119,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
     public void updateRecycler(DatePojoDataModel datePojo) {
         mAdapter.update(datePojo);
         mAdapter.notifyItemInserted(mAdapter.getItemCount());
-        mRecycler.smoothScrollToPosition(mAdapter.getItemCount()-1);
+        mRecycler.smoothScrollToPosition(mAdapter.getItemCount() - 1);
 
     }
 }
