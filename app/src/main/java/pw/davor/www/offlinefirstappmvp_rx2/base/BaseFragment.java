@@ -3,18 +3,18 @@ package pw.davor.www.offlinefirstappmvp_rx2.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import dagger.android.support.DaggerFragment;
 import pw.davor.www.offlinefirstappmvp_rx2.R;
 
 /**
  * Created by bnc on 16.2.2018..
  */
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends DaggerFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

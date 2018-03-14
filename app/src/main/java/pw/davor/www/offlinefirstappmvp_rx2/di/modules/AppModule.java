@@ -6,32 +6,23 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.support.AndroidSupportInjectionModule;
 import pw.davor.www.offlinefirstappmvp_rx2.application.OfflineFirstApp;
 import pw.davor.www.offlinefirstappmvp_rx2.di.markers.ApplicationContext;
 
 /**
  * Created by studio on 07/03/2018.
  */
-@Module
+@Module(includes = {AndroidSupportInjectionModule.class, DatabaseModule.class, BindingModule.class})
 public class AppModule {
-
-    private OfflineFirstApp mApplication;
-
-    public AppModule(OfflineFirstApp mApplication) {
-        this.mApplication = mApplication;
-    }
 
     @Singleton
     @Provides
     @ApplicationContext
-    Context providesApplicationContext(){
-        return mApplication;
+    Context providesApplicationContext(OfflineFirstApp application) {
+        return application.getApplicationContext();
     }
 
-    @Singleton
-    @Provides
-    OfflineFirstApp providesApplication(){
-        return mApplication;
-    }
+
 
 }

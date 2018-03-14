@@ -4,6 +4,8 @@ import android.util.Log;
 
 import org.reactivestreams.Subscription;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -20,6 +22,7 @@ public class HomePresenter implements HomeContract.Presenter {
     private Repository repository;
     private CompositeDisposable eventStream = new CompositeDisposable();
 
+    @Inject
     public HomePresenter(HomeContract.View mView, Repository repository) {
         this.mView = mView;
         this.repository = repository;

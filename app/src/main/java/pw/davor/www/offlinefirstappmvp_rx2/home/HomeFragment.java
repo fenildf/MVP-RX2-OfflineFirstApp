@@ -14,23 +14,18 @@ import android.widget.Toast;
 import javax.inject.Inject;
 
 import pw.davor.www.offlinefirstappmvp_rx2.R;
-import pw.davor.www.offlinefirstappmvp_rx2.application.OfflineFirstApp;
 import pw.davor.www.offlinefirstappmvp_rx2.base.BaseFragment;
 import pw.davor.www.offlinefirstappmvp_rx2.data.models.dataModels.DatePojoDataModel;
-import pw.davor.www.offlinefirstappmvp_rx2.di.components.DaggerHomeFragmentComponent;
-import pw.davor.www.offlinefirstappmvp_rx2.di.components.HomeFragmentComponent;
-import pw.davor.www.offlinefirstappmvp_rx2.di.modules.HomeFragmentModule;
 
 public class HomeFragment extends BaseFragment implements HomeContract.View {
 
     private RecyclerView mRecycler;
+
     @Inject
     RecyclerAdapter mAdapter;
 
     @Inject
     HomeContract.Presenter mPresenter;
-
-    private HomeFragmentComponent homeFragmentComponent;
 
     public HomeFragment() {
 
@@ -40,22 +35,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.View {
         return new HomeFragment();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getHomeFragmentComponent().inject(this);
-    }
-
-    public HomeFragmentComponent getHomeFragmentComponent() {
-        if (homeFragmentComponent == null) {
-            homeFragmentComponent = DaggerHomeFragmentComponent.builder()
-                    .homeFragmentModule(new HomeFragmentModule(this))
-                    .applicationComponent(OfflineFirstApp.get(getContext()).getApplicationComponent())
-
-                    .build();
-        }
-        return homeFragmentComponent;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
